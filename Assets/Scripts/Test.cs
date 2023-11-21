@@ -80,8 +80,8 @@ public class Test : MonoBehaviour
         }
 
         ImprovementRoom improvementRoom = new("1", "2", new CharacteristicType[] { CharacteristicType.Stamina, CharacteristicType.Magic }, new List<Hero> { hero, hero1 });
-        bool f = improvementRoom.TrySetTrainer(trainer);
-        Debug.Log(f);
+        improvementRoom.TrySetTrainer(trainer);
+        improvementRoom.Data.SetFinderMode(FinderMode.MaxValue);
 
         GameTimer gameTimer = new();
         gameTimer.SetAccelerationRatio(5);

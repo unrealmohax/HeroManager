@@ -10,6 +10,8 @@ public class ImprovementRoomData : IImprovementRoomData
     private List<Hero> _heroesTest;
     private Hero _trainingHero;
 
+    private FinderMode _currentfinderMode;
+
     private bool _isUpdated;
     private bool _isAutoTraining;
 
@@ -25,6 +27,8 @@ public class ImprovementRoomData : IImprovementRoomData
     public IReadOnlyList<CharacteristicType> CharacteristicTypes =>_characteristicTypes;
     public CharacteristicType CurrcharacteristicType => _currcharacteristicType;
     public IReadOnlyList<Hero> HeroesTest => _heroesTest;
+    public Hero Hero => _trainingHero;
+    public FinderMode FinderMode => _currentfinderMode;
     public bool IsUpdated => _isUpdated;
     public bool IsAutoTraining => _isAutoTraining;
     public bool IsHaveTrainingHero => _trainingHero != null;
@@ -43,7 +47,7 @@ public class ImprovementRoomData : IImprovementRoomData
 
         _trainingHero = hero;
     }
-
+    public void SetFinderMode(FinderMode mode) => _currentfinderMode = mode;
     public void EnableAutoTraining() => _isAutoTraining = true;
     public void DisableAutoTraining() => _isAutoTraining = false;
 

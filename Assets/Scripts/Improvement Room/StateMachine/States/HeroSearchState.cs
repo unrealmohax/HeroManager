@@ -1,20 +1,23 @@
-﻿public class HeroSearchState : ImprovementRoomActionsState
+﻿public sealed class HeroSearchState : ImprovementRoomActionsState
 {
-    private IFinderHeroTraining _finder;
+    private readonly FinderCreator _finderCreator;
 
     public HeroSearchState (IStateSwitcher switcher, IImprovementRoomData improvementRoomData) : base(switcher, improvementRoomData)
     {
-        _finder = new MaxCharacteristicStratagy();
+        _finderCreator = new FinderCreator();
     }
 
     public override void Handle()
     {
         base.Handle();
 
-        if (_finder.TryFindHero(_data.HeroesTest, _data.CurrcharacteristicType, out Hero hero))
+        if (_finderCreator.GetFinderStratigy(_data.FinderMode, out var stratigy))
         {
-            _data.SetTrainingHero(hero);
-        } 
+            if (stratigy.TryFindHero(_data.HeroesTest, _data.CurrcharacteristicType, out Hero hero))
+            {
+                _data.SetTrainingHero(hero);
+            }
+        }
     }
 
     public override void Update()

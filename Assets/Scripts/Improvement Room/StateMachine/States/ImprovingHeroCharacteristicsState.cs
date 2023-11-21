@@ -31,4 +31,12 @@ public class ImprovingHeroCharacteristicsState : ImprovementRoomActionsState
             _switcher.SwitchState<InactionState>();
         }
     }
+
+
+    public override void Handle() 
+    {
+        base.Handle();
+
+        Debug.Log($"Training Hero {_data.Hero.FirstName} {_data.Hero.SecondName}");
+    }
 }
