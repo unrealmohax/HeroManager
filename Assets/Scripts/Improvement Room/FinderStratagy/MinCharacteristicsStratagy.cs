@@ -9,7 +9,7 @@ public class MinCharacteristicsStratagy : FinderHeroTraining
 
         foreach (var hero in heroList)
         {
-            if (hero.CurrState == HeroState.Free) 
+            //if (hero.CurrState is RestState) 
             {
                 if (heroTraining == null)
                 {

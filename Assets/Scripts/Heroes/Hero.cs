@@ -3,11 +3,9 @@ using System;
 public class Hero 
 {
     public readonly IHeroInfo Info;
-
     private string _firstName;
     private string _secondName;
     private int _age;
-    private HeroState _state;
 
     public Hero(string FirstName, string SecondName, int Age, int value, GeneratorConfig config)
     {
@@ -15,10 +13,10 @@ public class Hero
 
         if (value <= 0) throw new Exception("There was an attempt to create a hero with incorrect parameters (value, maxValue - incorrect)");
 
-        var builder = new StateBulder();
+        var builder = new InfoBulder();
         var director = new HeroInfoDirector(builder, config);
         director.Build(value);
-        Info = (IHeroInfo)builder.GetState() ?? throw new Exception("There was an attempt to create a hero with incorrect parameters (State - null)");
+        Info = (IHeroInfo)builder.GetInfo() ?? throw new Exception("There was an attempt to create a hero with incorrect parameters (State - null)");
     }
 
     public Hero(string FirstName, string SecondName, int Age, HeroInfo heroInfo)
@@ -38,18 +36,10 @@ public class Hero
         }
 
         _age = Age;
-        _state = HeroState.Free;
     }
 
     public string FirstName => _firstName;
     public string SecondName => _secondName;
     public int Age => _age;
-    public HeroState CurrState => _state;
-}
-
-public enum HeroState 
-{
-    Free,
-    Training,
-
+    //public IState CurrState => StateMachine.CurrentState;
 }

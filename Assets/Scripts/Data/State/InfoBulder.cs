@@ -1,10 +1,10 @@
 using System;
 
-public class StateBulder : IInfoBulder
+public class InfoBulder : IInfoBulder
 {
     private IInfo _heroState;
 
-    public StateBulder()
+    public InfoBulder()
     {
         _heroState = new HeroInfo();
     }
@@ -18,7 +18,7 @@ public class StateBulder : IInfoBulder
         return this;
     }
 
-    public IInfo GetState()
+    public IInfo GetInfo()
     {
         IInfo state = _heroState;
         _heroState = new Info();

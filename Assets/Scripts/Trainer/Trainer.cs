@@ -6,7 +6,7 @@ public class Trainer
     private readonly string _secondName;
     private int _age;
     private readonly string _description;
-    private readonly IInfo _state;
+    private readonly IInfo _info;
 
     public Trainer(string firstName, string secondName, int age, string description, GeneratorConfig config)
     {
@@ -17,20 +17,15 @@ public class Trainer
         _age = age;
         _description = description ?? throw new Exception("There was an attempt to create a Trainer with incorrect parameters (description - null)");
 
-        var builder = new StateBulder();
+        var builder = new InfoBulder();
         var director = new TrainerInfoDefMagic(builder, config);
         director.Build();
-        _state = builder.GetState() ?? throw new Exception("There was an attempt to create a Trainer with incorrect parameters (TrainerState - null)");
+        _info = builder.GetInfo() ?? throw new Exception("There was an attempt to create a Trainer with incorrect parameters (TrainerState - null)");
     }
 
     public string FirstName => _firstName;
     public string SecondName => _secondName;
     public int Age => _age;
     public string Description => _description;
-    public IInfo State => _state;
-
-    public void AddAge() 
-    {
-        _age++;
-    }
+    public IInfo Info => _info;
 }

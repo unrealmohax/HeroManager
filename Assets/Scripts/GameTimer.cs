@@ -1,4 +1,4 @@
-public class GameTimer : IGameTime, IUpdatable
+public class GameTimer : IGameTime
 {
     private int _day;
     private int _hour;

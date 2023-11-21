@@ -1,69 +1,49 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 
 public  class ImprovementRoom 
 {
     private readonly string _name;
     private readonly string _description;
-    private readonly IRoomState _state;
-    private Trainer _trainer;
-    private IFinderHeroTraining _finder;
+    private readonly ImprovementRoomStateMachine _statemachine;
+    private readonly ImprovementRoomData _data;
 
-    private readonly CharacteristicType[] _characteristicTypes;
-    private CharacteristicType _currcharacteristicType;
-
-    private List<Hero> _heroesTest;
     public ImprovementRoom(string name, string description, CharacteristicType[] characteristicTypes, IEnumerable<Hero> heroesTest)
     {
         _name = name;
         _description = description;
-
-        _characteristicTypes = (CharacteristicType[])characteristicTypes.Clone();
-        _currcharacteristicType = _characteristicTypes[0];
-        _heroesTest = new List<Hero>(heroesTest);
-        //_state = new RoomState();
+        _data = new ImprovementRoomData((CharacteristicType[])characteristicTypes.Clone(), heroesTest);
+        _statemachine = new ImprovementRoomStateMachine(_data);
     }
 
     public string Name => _name;
     public string Description => _description;
-    public IRoomState State => _state;
-    public CharacteristicType[] CharacteristicTypes => _characteristicTypes;
+    public ImprovementRoomStateMachine StateMachine => _statemachine;
+    public ImprovementRoomData Data => _data;
 
     public bool TrySetTrainer(Trainer trainer) 
     {
         if (trainer == null) return false;
 
-        var trainerCharacteristicsType = trainer.State.GetCharacteristicTypes();
+        var trainerCharacteristicsType = trainer.Info.GetCharacteristicTypes();
 
-        foreach (var type in _characteristicTypes)
+        foreach (var type in _data.CharacteristicTypes)
         {
             if (trainerCharacteristicsType.Contains(type))
             {
-                _trainer = trainer;
-
-                CoroutineController.StartCoroutine(StartTraining(), "StartTraining");
+                _data.SetTrainer(trainer);
                 return true;
             }
         }
 
         return false;
     }
-    public void TrySetFinder() 
+
+    public bool TrySetHero(Hero hero)
     {
-        _finder = new MaxCharacteristicStratagy();
-    }
+        if (hero == null) return false;
 
-    private IEnumerator StartTraining()
-    {
-        if (_finder == null) throw new System.Exception("Finder - null");
-
-        if (_finder.TryFindHero(_heroesTest, _currcharacteristicType, out Hero hero))
-        {
-            Debug.Log($"{hero.FirstName} {hero.SecondName}");
-        }
-
-        yield return null;
+        _data.SetTrainingHero(hero);
+        return true;
     }
 }

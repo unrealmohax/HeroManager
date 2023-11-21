@@ -70,7 +70,7 @@ public class Test : MonoBehaviour
         Debug.Log($"Trainer Description {trainer.Description}");
         Debug.Log($"Trainer Age {trainer.Age}");
 
-        foreach (var characteristic in trainer.State.CharacteristicsMap) 
+        foreach (var characteristic in trainer.Info.CharacteristicsMap) 
         {
             var Characteristic = characteristic.Value;
             Debug.Log($"Trainer Characteristics Name {Characteristic.Name}");
@@ -80,22 +80,23 @@ public class Test : MonoBehaviour
         }
 
         ImprovementRoom improvementRoom = new("1", "2", new CharacteristicType[] { CharacteristicType.Stamina, CharacteristicType.Magic }, new List<Hero> { hero, hero1 });
-        improvementRoom.TrySetFinder();
         bool f = improvementRoom.TrySetTrainer(trainer);
         Debug.Log(f);
 
         GameTimer gameTimer = new();
         gameTimer.SetAccelerationRatio(5);
-        StartCoroutine("TimerStart", gameTimer);
-        StartCoroutine("Timer", gameTimer);
+        StartCoroutine(TimerStart(gameTimer));
+        StartCoroutine(Timer(improvementRoom));
+        StartCoroutine(DelayEnableAutoTraining(improvementRoom));
     }
 
-    public IEnumerator Timer(IGameTime gameTime) 
+    public IEnumerator Timer(ImprovementRoom improvementRoom) 
     {
         while (true)
         {
             yield return new WaitForSeconds(1);
-            Debug.Log($"Days {gameTime.GameTime.Days} Hour {gameTime.GameTime.Hours} Minutes {gameTime.GameTime.Minutes}");
+            improvementRoom.StateMachine.Update();
+            improvementRoom.StateMachine.Handle();
         }
     }
 
@@ -107,4 +108,14 @@ public class Test : MonoBehaviour
             gameTime.Update(Time.deltaTime);
         }
     }
+
+    public IEnumerator DelayEnableAutoTraining(ImprovementRoom improvementRoom)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5);
+            improvementRoom.Data.EnableAutoTraining();
+        }
+    }
+
 }
