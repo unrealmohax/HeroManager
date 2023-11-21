@@ -1,32 +1,23 @@
-using System;
-
-public class InfoBulder : IInfoBulder
+public class InfoBulder<T> : IInfoBulder where T : IInfo, new()
 {
-    private IInfo _heroState;
+    private T _info;
 
     public InfoBulder()
     {
-        _heroState = new HeroInfo();
+        _info = new T();
     }
 
     public IInfoBulder AddCharacteristic(CharacteristicType type, CharacteristicValue characteristic)
     {
-        CheckValidparametrs(characteristic);
-
         UpgradableCharacteristic upgradableCharacteristic = new(characteristic.MinValue, characteristic.MaxValue, type);
-        _heroState.AddCharacteristic(type, upgradableCharacteristic);
+        _info.AddCharacteristic(type, upgradableCharacteristic);
         return this;
     }
 
     public IInfo GetInfo()
     {
-        IInfo state = _heroState;
-        _heroState = new Info();
+        IInfo state = _info;
+        _info = new T();
         return state;
-    }
-
-    private void CheckValidparametrs(CharacteristicValue value)
-    {
-        if (value.MinValue <= 0 || value.MaxValue <= 0) throw new Exception("There was an attempt to create a trainer State with incorrect parameters (value <= 0)");
     }
 }

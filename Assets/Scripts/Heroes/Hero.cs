@@ -13,7 +13,7 @@ public class Hero
 
         if (value <= 0) throw new Exception("There was an attempt to create a hero with incorrect parameters (value, maxValue - incorrect)");
 
-        var builder = new InfoBulder();
+        var builder = new InfoBulder<HeroInfo>();
         var director = new HeroInfoDirector(builder, config);
         director.Build(value);
         Info = (IHeroInfo)builder.GetInfo() ?? throw new Exception("There was an attempt to create a hero with incorrect parameters (State - null)");
@@ -41,5 +41,10 @@ public class Hero
     public string FirstName => _firstName;
     public string SecondName => _secondName;
     public int Age => _age;
-    //public IState CurrState => StateMachine.CurrentState;
+
+
+    public void AddProgressCharacteristic(CharacteristicType type, float progress) 
+    {
+        Info.CharacteristicsMap[type].AddProgress(progress);
+    }
 }

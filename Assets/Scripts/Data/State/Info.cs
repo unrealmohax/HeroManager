@@ -11,14 +11,13 @@ public class Info : IInfo
 
     public IReadOnlyDictionary<CharacteristicType, UpgradableCharacteristic> CharacteristicsMap => _listcharacteristics;
 
-    public bool AddCharacteristic(CharacteristicType type, UpgradableCharacteristic upgradableCharacteristic) 
+    public void AddCharacteristic(CharacteristicType type, UpgradableCharacteristic upgradableCharacteristic) 
     {
-        if (upgradableCharacteristic == null) return false;
+        if (upgradableCharacteristic == null) return;
 
-        if (_listcharacteristics.ContainsKey(type)) return false;
+        if (_listcharacteristics.ContainsKey(type)) return;
 
         _listcharacteristics.Add(type, upgradableCharacteristic);
-        return true;
     }
 
     public IReadOnlyList<CharacteristicType> GetCharacteristicTypes()

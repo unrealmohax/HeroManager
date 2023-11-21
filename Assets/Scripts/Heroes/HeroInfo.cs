@@ -13,14 +13,13 @@ public class HeroInfo : IHeroInfo
         _reputation = new();
     }
     
-    public bool AddCharacteristic(CharacteristicType type, UpgradableCharacteristic UpgradableCharacteristic)
+    public void AddCharacteristic(CharacteristicType type, UpgradableCharacteristic UpgradableCharacteristic)
     {
-        if (UpgradableCharacteristic == null) return false;
+        if (UpgradableCharacteristic == null) return;
 
-        if (_listcharacteristics.ContainsKey(type)) return false;
+        if (_listcharacteristics.ContainsKey(type)) return;
 
         _listcharacteristics.Add(type, UpgradableCharacteristic);
-        return true;
     }
 
     public IReadOnlyDictionary<CharacteristicType, UpgradableCharacteristic> CharacteristicsMap => _listcharacteristics;

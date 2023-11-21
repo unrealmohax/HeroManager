@@ -79,24 +79,24 @@ public class Test : MonoBehaviour
             Debug.Log($"Trainer Characteristics Value {Characteristic.Value}");
         }
 
-        ImprovementRoom improvementRoom = new("1", "2", new CharacteristicType[] { CharacteristicType.Stamina, CharacteristicType.Magic }, new List<Hero> { hero, hero1 });
+        ImprovementRoom improvementRoom = new("1", "2", new CharacteristicType[] { CharacteristicType.Protection, CharacteristicType.Magic }, new List<Hero> { hero, hero1 });
         improvementRoom.TrySetTrainer(trainer);
-        improvementRoom.Data.SetFinderMode(FinderMode.MaxValue);
 
         GameTimer gameTimer = new();
         gameTimer.SetAccelerationRatio(5);
         StartCoroutine(TimerStart(gameTimer));
-        StartCoroutine(Timer(improvementRoom));
+        StartCoroutine(Timer(improvementRoom, hero));
         StartCoroutine(DelayEnableAutoTraining(improvementRoom));
     }
 
-    public IEnumerator Timer(ImprovementRoom improvementRoom) 
+    public IEnumerator Timer(ImprovementRoom improvementRoom, Hero hero) 
     {
         while (true)
         {
             yield return new WaitForSeconds(1);
             improvementRoom.StateMachine.Update();
             improvementRoom.StateMachine.Handle();
+
         }
     }
 

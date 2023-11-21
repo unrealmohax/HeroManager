@@ -1,9 +1,18 @@
-﻿using UnityEngine;
-
-public class ImprovingHeroCharacteristicsState : ImprovementRoomActionsState
+﻿public class ImprovingHeroCharacteristicsState : ImprovementRoomActionsState
 {
     public ImprovingHeroCharacteristicsState(IStateSwitcher switcher, IImprovementRoomData improvementRoomData) : base(switcher, improvementRoomData)
     {
+    }
+    public override void Handle()
+    {
+        base.Handle();
+
+        int heroValue = GetCharacteristicValue(_data.Hero.Info);
+        int trainerValue = GetCharacteristicValue(_data.Trainer.Info);
+
+        float progress = Get(heroValue, trainerValue);
+
+        _data.Hero.AddProgressCharacteristic(_data.CurrcharacteristicType, progress);
     }
 
     public override void Update()
@@ -32,11 +41,13 @@ public class ImprovingHeroCharacteristicsState : ImprovementRoomActionsState
         }
     }
 
-
-    public override void Handle() 
+    private int GetCharacteristicValue(IInfo info)
     {
-        base.Handle();
+        return info.CharacteristicsMap[_data.CurrcharacteristicType].Value; 
+    }
 
-        Debug.Log($"Training Hero {_data.Hero.FirstName} {_data.Hero.SecondName}");
+    private float Get(int valueHero, int valueTrainer) 
+    {
+        return valueHero <= valueTrainer ? _data.Trainer.LearningRate * 10 : _data.Trainer.LearningRate / 10;
     }
 }

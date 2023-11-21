@@ -18,21 +18,22 @@ public abstract class ImprovementRoomActionsState : IState
 
     public virtual void Enter()
     {
-        Debug.Log(GetType() + "Enter");
+        Debug.Log(GetType() + " Enter");
     }
 
     public virtual void Exit()
     {
-        Debug.Log(GetType() + "Exit");
+        Debug.Log(GetType() + " Exit");
     }
 
     public virtual void Update()
     {
+        Debug.Log(GetType() + " Update");
     }
 
     public virtual void Handle()
     {
-        Debug.Log(GetType() + "Handle");
+        Debug.Log(GetType() + " Handle");
     }
 }
 
