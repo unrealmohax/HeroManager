@@ -8,7 +8,7 @@ public  class ImprovementRoom
     private readonly ImprovementRoomStateMachine _statemachine;
     private readonly ImprovementRoomData _data;
 
-    public ImprovementRoom(string name, string description, CharacteristicType[] characteristicTypes, IEnumerable<Hero> heroesTest)
+    public ImprovementRoom(string name, string description, CharacteristicType[] characteristicTypes, IReadOnlyDictionary<string, Hero> heroesTest)
     {
         _name = name;
         _description = description;

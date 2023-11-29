@@ -3,6 +3,7 @@
     public ImprovingHeroCharacteristicsState(IStateSwitcher switcher, IImprovementRoomData improvementRoomData) : base(switcher, improvementRoomData)
     {
     }
+
     public override void Handle()
     {
         base.Handle();

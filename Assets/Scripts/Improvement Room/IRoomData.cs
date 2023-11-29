@@ -1,4 +1,4 @@
-public interface IRoomState 
+public interface IRoomData 
 {
     int Level { get; }
     int MaxLevel { get; }

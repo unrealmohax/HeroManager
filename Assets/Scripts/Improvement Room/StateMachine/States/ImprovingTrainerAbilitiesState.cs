@@ -4,6 +4,15 @@
     {
     }
 
+    public override void Handle()
+    {
+        base.Handle();
+
+        float progress = _data.Trainer.LearningRate;
+
+        _data.Trainer.AddProgressCharacteristic(_data.CurrcharacteristicType, progress);
+    }
+
     public override void Update()
     {
         base.Update();

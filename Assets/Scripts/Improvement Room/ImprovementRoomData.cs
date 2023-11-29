@@ -7,7 +7,7 @@ public class ImprovementRoomData : IImprovementRoomData
 
     private readonly CharacteristicType[] _characteristicTypes;
     private CharacteristicType _currcharacteristicType;
-    private List<Hero> _heroesTest;
+    private IReadOnlyDictionary<string, Hero> _heroesTest;
     private Hero _trainingHero;
 
     private FinderMode _currentfinderMode;
@@ -15,18 +15,18 @@ public class ImprovementRoomData : IImprovementRoomData
     private bool _isUpdated;
     private bool _isAutoTraining;
 
-    public ImprovementRoomData(CharacteristicType[] characteristicTypes, IEnumerable<Hero> heroesTest)
+    public ImprovementRoomData(CharacteristicType[] characteristicTypes, IReadOnlyDictionary<string, Hero> heroesTest)
     {
         _characteristicTypes = characteristicTypes;
         _currcharacteristicType = _characteristicTypes[0];
-        _heroesTest = new List<Hero>(heroesTest); ;
+        _heroesTest = heroesTest;
     }
 
     #region IImprovementRoomData
     public Trainer Trainer => _trainer;
     public IReadOnlyList<CharacteristicType> CharacteristicTypes =>_characteristicTypes;
     public CharacteristicType CurrcharacteristicType => _currcharacteristicType;
-    public IReadOnlyList<Hero> HeroesTest => _heroesTest;
+    public IReadOnlyList<Hero> HeroesTest => new List<Hero>(_heroesTest.Values);
     public Hero Hero => _trainingHero;
     public FinderMode FinderMode => _currentfinderMode;
     public bool IsUpdated => _isUpdated;

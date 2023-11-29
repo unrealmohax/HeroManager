@@ -1,6 +1,6 @@
 using System;
 
-public class RoomState : IRoomState
+public class RoomData : IRoomData
 {
     private int _level;
     private int _currPoint;
@@ -9,7 +9,7 @@ public class RoomState : IRoomState
 
     protected const int LEVEL_REPUTATION_POINTS = 100;
 
-    public RoomState(int maxlevel)
+    public RoomData(int maxlevel)
     {
         if (maxlevel <= 0) throw new Exception("There was an attempt to create a room with incorrect parameters (RoomState maxlevel <= 0)");
 
