@@ -26,11 +26,11 @@ public class Guild
         }
     }
 
-    public void RecruitTrainer(GeneratorConfig heroConfig)
+    public void RecruitTrainer(GeneratorConfig trainerConfig)
     {
-        RecruitTrainers recruitTrainers = new RecruitTrainers(heroConfig);
+        RecruitTrainers recruitTrainers = new RecruitTrainers(trainerConfig);
 
-        List<FullName> firstNamesList = _data.Heroes.Select(hero => hero.FullName).ToList();
+        List<FullName> firstNamesList = _data.Trainers.Select(trainer => trainer.FullName).ToList();
         var trainers = recruitTrainers.Recruiting(firstNamesList);
 
         foreach (var trainer in trainers)

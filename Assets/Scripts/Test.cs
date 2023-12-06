@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class Test : MonoBehaviour
@@ -10,8 +11,10 @@ public class Test : MonoBehaviour
     {
         Guild guild = new Guild("Famaly");
         guild.RecruitHero(HeroConfig);
+        guild.RecruitTrainer(TrainerConfig);
 
         var heroes = guild.Data.HeroesMap;
+        var trainers = guild.Data.TrainersMap;
 
         foreach (var heroKV in heroes)
         {
@@ -64,24 +67,21 @@ public class Test : MonoBehaviour
 
             Debug.Log($"Hero Reputation Level {hero.Info.Reputation.Level}");
             Debug.Log($"Hero Reputation Progress {hero.Info.Reputation.Progress}");
-
-            Debug.LogError($"Hero Reputation Progress {hero.Info.AverageValueCharacteristic}");
-            Debug.LogError($"Hero Reputation Progress {hero.Info.AverageValueCharacteristic}");
         }
 
-        Trainer trainer = new ( new FullName("Андрей", "Панченко"), 30, "", TrainerConfig);
-
-        Debug.Log($"Trainer Name  {trainer.FullName}");
-        Debug.Log($"Trainer Description {trainer.Description}");
-        Debug.Log($"Trainer Age {trainer.Age}");
-
-        foreach (var characteristic in trainer.Info.CharacteristicsMap) 
+        foreach (var trainerMap in trainers) 
         {
-            var Characteristic = characteristic.Value;
-            Debug.Log($"Trainer Characteristics Name {Characteristic.Name}");
-            Debug.Log($"Trainer Characteristics Description {Characteristic.Description}");
-            Debug.Log($"Trainer Characteristics CharacteristicType {Characteristic.CharacteristicType}");
-            Debug.Log($"Trainer Characteristics Value {Characteristic.Value}");
+            var trainer = trainerMap.Value;
+            Debug.Log($"Trainer Name {trainer.FullName}");
+            Debug.Log($"Trainer Description {trainer.Description}");
+
+            foreach (var characteristicMap in trainer.Info.CharacteristicsMap)
+            {
+                var characteristic = characteristicMap.Value;
+                Debug.Log($"Trainer Characteristics Name {characteristic.Name}");
+                Debug.Log($"Trainer Characteristics CharacteristicType {characteristic.CharacteristicType}");
+                Debug.Log($"Trainer Characteristics Value {characteristic.Value}");
+            }   
         }
 
         /*ImprovementRoom improvementRoom = new("1", "2", new CharacteristicType[] { CharacteristicType.Protection, CharacteristicType.Magic }, heroes);
