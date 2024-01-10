@@ -6,16 +6,16 @@ public class Hero : IPersonInfo
     private FullName _fullName;
     private int _age;
 
-    public Hero(FullName fullName, int Age, int value, GeneratorConfig config)
+    public Hero(FullName fullName, int age, int value, GeneratorConfig config)
     {
         _fullName = fullName;
 
-        if (Age < 13 || Age > 99)
+        if (age < 13 || age > 99)
         {
-            throw new Exception($"There was an attempt to create a hero with incorrect parameters (Age - {Age})");
+            throw new Exception($"There was an attempt to create a hero with incorrect parameters (Age - {age})");
         }
 
-        _age = Age;
+        _age = age;
 
         if (value <= 0) throw new Exception("There was an attempt to create a hero with incorrect parameters (value, maxValue - incorrect)");
 
